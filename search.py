@@ -76,25 +76,42 @@ def tinyMazeSearch(problem):
     return  [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem):
-    """
-    Search the deepest nodes in the search tree first.
-
-    Your search algorithm needs to return a list of actions that reaches the
-    goal. Make sure to implement a graph search algorithm.
-
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
-    """
+    """Search the deepest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
     
-    raiz = problem.getStartState()
-    nodosExplorados, nodosFronteira = [], []
+    import util
 
-    nodosFronteira.append((raiz, []))
+    raiz = problem.getStartState()
+    nodosExplorados = []
+    nodosFronteira = util.Stack()
+
+    nodosFronteira.push((raiz, []))
+
+    while not nodosFronteira.isEmpty(): 
+        nodoAtual, caminhoAtual = nodosFronteira.pop()
+
+        if problem.isGoalState(nodoAtual):
+            return caminhoAtual
+        
+        if nodoAtual not in nodosExplorados:
+            nodosExplorados.append(nodoAtual)
+            
+            for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
+                if sucessor not in nodosExplorados:
+                    novoCaminho = caminhoAtual + [direcao]
+                    nodosFronteira.push((sucessor, novoCaminho))
+
+def breadthFirstSearch(problem):
+    """Search the shallowest nodes in the search tree first."""
+    "*** YOUR CODE HERE ***"
+
+    import util
+
+    raiz = problem.getStartState()
+    nodosExplorados = []
+    nodosFronteira = util.Queue()
+
+    nodosFronteira.push((raiz, []))
 
     while nodosFronteira:
         nodoAtual, caminhoAtual = nodosFronteira.pop()
@@ -108,35 +125,11 @@ def depthFirstSearch(problem):
             for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
                 if sucessor not in nodosExplorados:
                     novoCaminho = caminhoAtual + [direcao]
-                    nodosFronteira.append((sucessor, novoCaminho))
-
-def breadthFirstSearch(problem):
-    """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-
-    raiz = problem.getStartState()
-    nodosExplorados, nodosFronteira = [], []
-
-    nodosFronteira.append((raiz, []))
-
-    while nodosFronteira:
-        nodoAtual, caminhoAtual = nodosFronteira.pop(0)
-    
-        if problem.isGoalState(nodoAtual):
-            return caminhoAtual
-        
-        if nodoAtual not in nodosExplorados:
-            nodosExplorados.append(nodoAtual)
-        
-            for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
-                if sucessor not in nodosExplorados:
-                    novoCaminho = caminhoAtual + [direcao]
-                    nodosFronteira.append((sucessor, novoCaminho))
+                    nodosFronteira.push((sucessor, novoCaminho))
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """
