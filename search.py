@@ -90,7 +90,25 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    
+    raiz = problem.getStartState()
+    nodosExplorados, nodosFronteira = [], []
+
+    nodosFronteira.append((raiz, []))
+
+    while nodosFronteira:
+        nodoAtual, caminhoAtual = nodosFronteira.pop()
+    
+        if problem.isGoalState(nodoAtual):
+            return caminhoAtual
+        
+        if nodoAtual not in nodosExplorados:
+            nodosExplorados.append(nodoAtual)
+        
+            for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
+                if sucessor not in nodosExplorados:
+                    novoCaminho = caminhoAtual + [direcao]
+                    nodosFronteira.append((sucessor, novoCaminho))
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
