@@ -80,7 +80,7 @@ def depthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
 
     raiz = problem.getStartState()
-    nodosExplorados = []
+    nodosExplorados = set()
     nodosFronteira = util.Stack()
 
     nodosFronteira.push((raiz, []))
@@ -92,7 +92,7 @@ def depthFirstSearch(problem):
             return caminhoAtual
         
         if nodoAtual not in nodosExplorados:
-            nodosExplorados.append(nodoAtual)
+            nodosExplorados.add(nodoAtual)
             
             for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
                 if sucessor not in nodosExplorados:
@@ -104,7 +104,7 @@ def breadthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
 
     raiz = problem.getStartState()
-    nodosExplorados = []
+    nodosExplorados = set()
     nodosFronteira = util.Queue()
 
     nodosFronteira.push((raiz, []))
@@ -116,7 +116,7 @@ def breadthFirstSearch(problem):
             return caminhoAtual
         
         if nodoAtual not in nodosExplorados:
-            nodosExplorados.append(nodoAtual)
+            nodosExplorados.add(nodoAtual)
         
             for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
                 if sucessor not in nodosExplorados:
@@ -128,7 +128,7 @@ def uniformCostSearch(problem):
     "*** YOUR CODE HERE ***"
     
     raiz = problem.getStartState()
-    nodosExplorados = []
+    nodosExplorados = set()
     nodosFronteira = util.PriorityQueue()
     
     nodosFronteira.push((raiz, []), 0)
@@ -140,7 +140,7 @@ def uniformCostSearch(problem):
             return caminhoAtual
     
         if nodoAtual not in nodosExplorados:
-            nodosExplorados.append(nodoAtual)
+            nodosExplorados.add(nodoAtual)
     
             for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
                 if sucessor not in nodosExplorados:
