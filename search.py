@@ -78,8 +78,6 @@ def tinyMazeSearch(problem):
 def depthFirstSearch(problem):
     """Search the deepest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    
-    import util
 
     raiz = problem.getStartState()
     nodosExplorados = []
@@ -105,15 +103,13 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
-    import util
-
     raiz = problem.getStartState()
     nodosExplorados = []
     nodosFronteira = util.Queue()
 
     nodosFronteira.push((raiz, []))
 
-    while nodosFronteira:
+    while not nodosFronteira.isEmpty():
         nodoAtual, caminhoAtual = nodosFronteira.pop()
     
         if problem.isGoalState(nodoAtual):
@@ -130,6 +126,27 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    
+    raiz = problem.getStartState()
+    nodosExplorados = []
+    nodosFronteira = util.PriorityQueue()
+    
+    nodosFronteira.push((raiz, []), 0)
+    
+    while not nodosFronteira.isEmpty():
+        nodoAtual, caminhoAtual = nodosFronteira.pop()
+    
+        if problem.isGoalState(nodoAtual):
+            return caminhoAtual
+    
+        if nodoAtual not in nodosExplorados:
+            nodosExplorados.append(nodoAtual)
+    
+            for sucessor, direcao, custo in problem.getSuccessors(nodoAtual):
+                if sucessor not in nodosExplorados:
+                    novoCaminho = caminhoAtual + [direcao]
+                    custoTotal = problem.getCostOfActions(novoCaminho)
+                    nodosFronteira.push((sucessor, novoCaminho), custoTotal)
 
 def nullHeuristic(state, problem=None):
     """
